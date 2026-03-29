@@ -4,7 +4,7 @@ services:
     runtime: docker
     plan: free
     dockerfilePath: ./Dockerfile
-    port: 10000
+    port: 8080
     envVars:
       - key: SS_PASSWORD
         value: 0Penupno2@priye5
