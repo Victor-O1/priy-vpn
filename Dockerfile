@@ -5,6 +5,7 @@ RUN apt-get update && apt-get install -y \
     cron \
     wget \
     xz-utils \
+    netcat-openbsd \
     && rm -rf /var/lib/apt/lists/*
 
 # Install shadowsocks-rust (modern, works with OpenSSL 3)

@@ -4,12 +4,13 @@ services:
     runtime: docker
     plan: free
     dockerfilePath: ./Dockerfile
+    port: 10000
     envVars:
       - key: SS_PASSWORD
         value: 0Penupno2@priye5
       - key: SS_PORT
         value: 8388
       - key: SS_METHOD
-        value: aes-256-cfb
+        value: aes-256-gcm
       - key: RENDER_URL
         value: https://priy-vpn.onrender.com
