@@ -1,4 +1,3 @@
-# Ignore sensitive files
 *.log
 *.env
 .env

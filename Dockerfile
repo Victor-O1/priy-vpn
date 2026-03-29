@@ -1,10 +1,11 @@
 FROM debian:bullseye-slim
 
-# Install shadowsocks-libev and v2ray-plugin dependencies
+# Install shadowsocks-libev, cron, and curl
 RUN apt-get update && apt-get install -y \
     shadowsocks-libev \
     wget \
     curl \
+    cron \
     && rm -rf /var/lib/apt/lists/*
 
 # Download v2ray-plugin for obfuscation (makes traffic look like HTTPS)
@@ -14,10 +15,8 @@ RUN wget -q https://github.com/shadowsocks/v2ray-plugin/releases/download/v1.3.2
     && chmod +x /usr/local/bin/v2ray-plugin \
     && rm v2ray-plugin-linux-amd64-v1.3.2.tar.gz
 
-# Copy config file
+# Copy config and scripts
 COPY config.json /etc/shadowsocks-libev/config.json
-
-# Copy startup script
 COPY start.sh /start.sh
 RUN chmod +x /start.sh
 
