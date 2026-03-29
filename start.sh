@@ -15,7 +15,7 @@ echo "========================================="
 cat > /etc/shadowsocks/config.json << CONF
 {
     "server": "0.0.0.0",
-    "server_port": $PORT,
+    "server_port": 10000,
     "password": "$PASSWORD",
     "timeout": 300,
     "method": "$METHOD"

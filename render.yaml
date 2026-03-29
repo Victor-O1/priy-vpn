@@ -9,7 +9,7 @@ services:
       - key: SS_PASSWORD
         value: 0Penupno2@priye5
       - key: SS_PORT
-        value: 8388
+        value: 10000
       - key: SS_METHOD
         value: aes-256-gcm
       - key: RENDER_URL
