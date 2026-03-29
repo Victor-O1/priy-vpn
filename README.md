@@ -1,6 +1,6 @@
-# 🔒 Shadowsocks VPN (Python version)
+# 🔒 Shadowsocks VPN (Python 3.9)
 
-Works on Render free tier — no special Linux capabilities needed.
+Works on Render free tier.
 
 ## Client Config
 
@@ -10,6 +10,3 @@ Works on Render free tier — no special Linux capabilities needed.
 | Port       | 8388                     |
 | Password   | YourStrongPassword123!   |
 | Encryption | aes-256-cfb              |
-
-## Change Password
-Edit SS_PASSWORD in render.yaml and redeploy.

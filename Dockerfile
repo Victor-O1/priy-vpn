@@ -1,4 +1,5 @@
-FROM python:3.11-slim
+# Python 3.9 — shadowsocks is compatible with this version
+FROM python:3.9-slim
 
 # Install dependencies
 RUN apt-get update && apt-get install -y \
@@ -6,7 +7,7 @@ RUN apt-get update && apt-get install -y \
     cron \
     && rm -rf /var/lib/apt/lists/*
 
-# Install shadowsocks python version (works without special Linux capabilities)
+# Install shadowsocks
 RUN pip install shadowsocks
 
 # Copy files

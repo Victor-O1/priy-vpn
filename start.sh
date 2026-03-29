@@ -28,8 +28,10 @@ echo "*/5 * * * * curl -s $RENDER_URL > /dev/null 2>&1" | crontab -
 service cron start
 echo "[✓] Cronjob started — pinging every 5 minutes"
 
-# Start shadowsocks (python version — no special permissions needed)
-exec ssserver -c /etc/shadowsocks/config.json -d start --log-file /dev/stdout --pid-file /tmp/ss.pid
+# Start shadowsocks
+ssserver -c /etc/shadowsocks/config.json &
+
+echo "[✓] Shadowsocks started!"
 
 # Keep container alive
 tail -f /dev/null
