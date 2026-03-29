@@ -12,4 +12,4 @@ services:
       - key: SS_METHOD
         value: aes-256-gcm
       - key: RENDER_URL
-        value: https://YOUR-APP-NAME.onrender.com
+        value: https://priy-vpn.onrender.com
