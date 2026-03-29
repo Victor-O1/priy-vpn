@@ -10,6 +10,6 @@ services:
       - key: SS_PORT
         value: 8388
       - key: SS_METHOD
-        value: aes-256-gcm
+        value: aes-256-cfb
       - key: RENDER_URL
         value: https://priy-vpn.onrender.com

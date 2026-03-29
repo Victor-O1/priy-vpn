@@ -1,9 +1,8 @@
 #!/bin/bash
 
-# Use environment variables if set, otherwise use defaults
 PASSWORD=${SS_PASSWORD:-YourStrongPassword123!}
 PORT=${SS_PORT:-8388}
-METHOD=${SS_METHOD:-aes-256-gcm}
+METHOD=${SS_METHOD:-aes-256-cfb}
 RENDER_URL=${RENDER_URL:-http://localhost:8388}
 
 echo "========================================="
@@ -13,20 +12,24 @@ echo "  Method:   $METHOD"
 echo "  Self-ping URL: $RENDER_URL"
 echo "========================================="
 
-# Create cronjob to ping self every 5 minutes (prevents Render sleep)
+# Write config dynamically from env vars
+cat > /etc/shadowsocks/config.json << CONF
+{
+    "server": "0.0.0.0",
+    "server_port": $PORT,
+    "password": "$PASSWORD",
+    "timeout": 300,
+    "method": "$METHOD"
+}
+CONF
+
+# Setup cronjob to ping self every 5 minutes
 echo "*/5 * * * * curl -s $RENDER_URL > /dev/null 2>&1" | crontab -
-
-# Start cron daemon in background
 service cron start
-echo "[✓] Cronjob started — server will self-ping every 5 minutes"
+echo "[✓] Cronjob started — pinging every 5 minutes"
 
-# Start shadowsocks server (foreground)
-exec ss-server \
-    -s 0.0.0.0 \
-    -p $PORT \
-    -k $PASSWORD \
-    -m $METHOD \
-    -t 300 \
-    --fast-open \
-    -u \
-    -v
+# Start shadowsocks (python version — no special permissions needed)
+exec ssserver -c /etc/shadowsocks/config.json -d start --log-file /dev/stdout --pid-file /tmp/ss.pid
+
+# Keep container alive
+tail -f /dev/null
