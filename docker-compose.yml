@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  shadowsocks:
+    build: .
+    container_name: ss-vpn
+    restart: always
+    ports:
+      - "8388:8388/tcp"
+      - "8388:8388/udp"
+    environment:
+      - SS_PASSWORD=YourStrongPassword123!
+      - SS_PORT=8388
+      - SS_METHOD=aes-256-gcm
+    volumes:
+      - ./config.json:/etc/shadowsocks-libev/config.json

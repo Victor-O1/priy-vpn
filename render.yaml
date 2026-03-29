@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: shadowsocks-vpn
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: SS_PASSWORD
+        value: 0Penupno2@priy4
+      - key: SS_PORT
+        value: 8388
+      - key: SS_METHOD
+        value: aes-256-gcm
+    ports:
+      - port: 8388
+        protocol: tcp
