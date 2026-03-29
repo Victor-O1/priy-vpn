@@ -3,5 +3,5 @@
     "server_port": 8388,
     "password": "0Penupno2@priye5",
     "timeout": 300,
-    "method": "aes-256-cfb"
+    "method": "aes-256-gcm"
 }

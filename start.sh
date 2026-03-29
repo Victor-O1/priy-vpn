@@ -2,17 +2,16 @@
 
 PASSWORD=${SS_PASSWORD:-YourStrongPassword123!}
 PORT=${SS_PORT:-8388}
-METHOD=${SS_METHOD:-aes-256-cfb}
-RENDER_URL=${RENDER_URL:-http://localhost:8388}
+METHOD=${SS_METHOD:-aes-256-gcm}
+RENDER_URL=${RENDER_URL:-https://priy-vpn.onrender.com}
 
 echo "========================================="
-echo "  Shadowsocks VPN Server Starting..."
+echo "  Shadowsocks-Rust VPN Server Starting..."
 echo "  Port:     $PORT"
 echo "  Method:   $METHOD"
-echo "  Self-ping URL: $RENDER_URL"
 echo "========================================="
 
-# Write config dynamically from env vars
+# Write config
 cat > /etc/shadowsocks/config.json << CONF
 {
     "server": "0.0.0.0",
@@ -23,15 +22,10 @@ cat > /etc/shadowsocks/config.json << CONF
 }
 CONF
 
-# Setup cronjob to ping self every 5 minutes
+# Cronjob to keep Render awake
 echo "*/5 * * * * curl -s $RENDER_URL > /dev/null 2>&1" | crontab -
 service cron start
-echo "[✓] Cronjob started — pinging every 5 minutes"
+echo "[✓] Cronjob started"
 
-# Start shadowsocks
-ssserver -c /etc/shadowsocks/config.json &
-
-echo "[✓] Shadowsocks started!"
-
-# Keep container alive
-tail -f /dev/null
+# Start shadowsocks-rust
+exec ssserver -c /etc/shadowsocks/config.json

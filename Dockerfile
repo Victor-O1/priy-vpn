@@ -1,16 +1,18 @@
-# Python 3.9 — shadowsocks is compatible with this version
-FROM python:3.9-slim
+FROM debian:bookworm-slim
 
-# Install dependencies
 RUN apt-get update && apt-get install -y \
     curl \
     cron \
+    wget \
     && rm -rf /var/lib/apt/lists/*
 
-# Install shadowsocks
-RUN pip install shadowsocks
+# Install shadowsocks-rust (modern, works with OpenSSL 3)
+RUN wget -q https://github.com/shadowsocks/shadowsocks-rust/releases/download/v1.20.4/shadowsocks-v1.20.4.x86_64-unknown-linux-gnu.tar.xz \
+    && tar -xf shadowsocks-v1.20.4.x86_64-unknown-linux-gnu.tar.xz \
+    && mv ssserver /usr/local/bin/ssserver \
+    && chmod +x /usr/local/bin/ssserver \
+    && rm -f *.tar.xz sslocal ssurl ssmanager ssservice
 
-# Copy files
 COPY config.json /etc/shadowsocks/config.json
 COPY start.sh /start.sh
 RUN chmod +x /start.sh
